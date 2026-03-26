@@ -1,0 +1,16 @@
+[workspace]
+channels = ["conda-forge","bioconda"]
+name = "igv-report"
+platforms = ["linux-64", "osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "==3.11"
+bcftools = ">=1.23.1,<2"
+htslib = ">=1.23.1,<2"
+samtools = ">=1.23.1,<2"
+
+[pypi-dependencies]
+igv-reports = ">=1.16.1, <2"

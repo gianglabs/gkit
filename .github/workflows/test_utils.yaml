@@ -1,0 +1,36 @@
+name: Test Changed Projects
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-changed-projects:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files in root directories
+        uses: tj-actions/changed-files@v46.0.5
+        id: changed-files
+        with:
+          dir_names: "true"
+          dir_names_max_depth: 1
+          files: |
+            */**
+          files_ignore: |
+            .github/**
+          base: ${{ github.event.pull_request.base.ref }}
+
+      - name: Running test on changed utility
+        if: steps.changed-files.outputs.all_changed_files != ''
+        run: |
+          for util in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Running test for $util"
+            make -C $util test
+          done
