@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get changed files in root directories
-        uses: tj-actions/changed-files@v46.0.5
+        uses: tj-actions/changed-files@v47.0.5
         id: changed-files
         with:
           dir_names: "true"
@@ -25,7 +25,7 @@ jobs:
             */**
           files_ignore: |
             .github/**
-          base: ${{ github.event.pull_request.base.ref }}
+          base_sha: ${{ github.event.pull_request.base.ref }}
 
       - name: Running test on changed utility
         if: steps.changed-files.outputs.all_changed_files != ''
