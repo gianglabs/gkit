@@ -1,0 +1,10 @@
+name,url
+Illumina_HiSeq_300x,s3://giab/data/NA12878/NIST_NA12878_HG001_HiSeq_300x/NHGRI_Illumina300X_novoalign_bams/HG001.hs37d5.300x.bam
+10X_Chromium_v2.0,s3://giab/data/NA12878/10Xgenomics_ChromiumGenome_LongRanger2.0_06202016/NA12878_GRCh37.bam
+10X_Chromium_v2.1,s3://giab/data/NA12878/10Xgenomics_ChromiumGenome_LongRanger2.1_09302016/NA12878_hg19/NA12878_hg19_phased_possorted_bam.bam
+PacBio_SequelII_CCS,s3://giab/data/NA12878/PacBio_SequelII_CCS_11kb/HG001.SequelII.pbmm2.hs37d5.whatshap.haplotag.RTG.trio.bam
+Nanopore_Ultralong,s3://giab/data/NA12878/Ultralong_OxfordNanopore/NA12878-minion-ul_GRCh37.bam
+SOLiD_Run1,s3://giab/data/NA12878/NIST_NA12878_HG001_SOLID5500W/130920_HG001_merged.b37.bam
+SOLiD_Run2,s3://giab/data/NA12878/NIST_NA12878_HG001_SOLID5500W/131114_HG001_merged.b37.bam
+IonTorrent_Exome,s3://giab/data/NA12878/ion_exome/IonXpress_020_rawlib.b37.bam
+High_Confidence_GIAB,s3://giab/release/NA12878_HG001/NISTv3.3.2/GRCh37/HG001_GRCh37_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-10X-SOLID_CHROM1-X_v.3.3.2_highconf_PGandRTGphasetransfer.vcf.gz
