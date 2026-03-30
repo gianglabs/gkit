@@ -9,19 +9,22 @@ setup: ${HOME}/.pixi/bin/pixi
 
 start-slurm:
 	docker run \
-		-v ${PWD}:/home/river/spark \
+		-v ${PWD}:/tmp/spark \
+		-v ${HOME}/.pixi:/root/.pixi \
 		--name slurm-dev \
 		-p 8081:22 \
 		--rm \
 		--privileged \
 		-d ${SLURM_IMAGE} || echo "Docker Slurm is already configured"
+	
+	# wait for slurm to start
+	sleep 5
 
 # inside user river is the standard user with 1001 mapping id, Github Actions does not have this user
-test: start-slurm
+test: ${HOME}/.pixi/bin/pixi start-slurm
 	docker exec \
-		-u 1001:1001 \
-		-w /home/river/spark \
-		slurm-dev /home/river/.pixi/bin/pixi run sparkhpc-example
+		-w /tmp/spark \
+		slurm-dev /root/.pixi/bin/pixi run sparkhpc-example
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
