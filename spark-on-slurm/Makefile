@@ -17,7 +17,12 @@ start-slurm:
 		-d ${SLURM_IMAGE}
 
 test: setup
-	${HOME}/.pixi/bin/pixi run sparkhpc-example
+	docker exec \
+		-u river \
+		-w /home/river \
+		slurm-dev \
+		/home/river/.pixi/bin/pixi \
+		run sparkhpc-example
 
 clean:
 	rm -f sparkhpc/sparkcluster-*.log sparkhpc/job
