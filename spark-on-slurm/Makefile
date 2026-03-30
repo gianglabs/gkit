@@ -22,7 +22,7 @@ get-slurm:
 	max=5; \
 	until [ $$count -ge $$max ]; do \
 		echo "Checking SLURM (attempt $$((count+1))/$$max)..." ; \
-		docker exec -it -w /home/river slurm-dev squeue && break; \
+		docker exec -w /home/river slurm-dev squeue && break; \
 		count=$$((count+1)); \
 		echo "SLURM not ready, retrying in 5 seconds..." ; \
 		sleep 5; \
