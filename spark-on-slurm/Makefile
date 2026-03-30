@@ -21,7 +21,7 @@ test: start-slurm
 	docker exec \
 		-u 1001:1001 \
 		-w /home/river/spark \
-		slurm-dev ls -lah
+		slurm-dev /home/river/.pixi/bin/pixi run sparkhpc-example
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
