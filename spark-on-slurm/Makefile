@@ -14,9 +14,9 @@ start-slurm:
 		-p 8081:22 \
 		--rm \
 		--privileged \
-		-d ${SLURM_IMAGE}
+		-d ${SLURM_IMAGE} || echo "Docker Slurm is already configured"
 
-test: setup
+test: setup start-slurm
 	docker exec \
 		-u river \
 		-w /home/river \
