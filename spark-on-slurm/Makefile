@@ -16,13 +16,12 @@ start-slurm:
 		--privileged \
 		-d ${SLURM_IMAGE} || echo "Docker Slurm is already configured"
 
+# inside user river is the standard user with 1001 mapping id, Github Actions does not have this user
 test: start-slurm
 	docker exec \
-		-u river \
+		-u 1001:1001 \
 		-w /home/river/spark \
-		slurm-dev \
-		/home/river/.pixi/bin/pixi \
-		run sparkhpc-example
+		slurm-dev ls -lah
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
