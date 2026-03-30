@@ -1,0 +1,33 @@
+#!/bin/env python
+#SBATCH -J sparkcluster
+#SBATCH -t 10 # runtime to request !!! in minutes !!!
+#SBATCH -o sparkcluster-%J.log # output extra o means overwrite
+#SBATCH -n 1 # requesting n tasks
+#SBATCH -c 2
+#SBATCH --mem-per-cpu=2000 
+#SBATCH -N 1
+#SBATCH --ntasks-per-core=1
+
+# setup the spark paths
+import os
+import sys
+
+submit_dir = os.environ.get('SLURM_SUBMIT_DIR', os.getcwd())
+if submit_dir not in sys.path:
+    sys.path.insert(0, submit_dir)
+pkg_dir = os.path.join(submit_dir, 'sparkhpc')
+if pkg_dir not in sys.path:
+    sys.path.insert(0, pkg_dir)
+
+os.environ['SPARK_HOME']='/home/river/.pixi/envs/default/lib/python3.11/site-packages/pyspark'
+os.environ['SPARK_LOCAL_DIRS']='/tmp'
+os.environ['LOCAL_DIRS']=os.environ['SPARK_LOCAL_DIRS']
+os.environ['SPARK_WORKER_DIR']=os.path.join(os.environ['SPARK_LOCAL_DIRS'], 'work')
+
+from sparkhpc import sparkjob
+
+sparkjob.start_cluster('4000M', 
+                       cores_per_executor=2, 
+                       spark_home='/home/river/.pixi/envs/default/lib/python3.11/site-packages/pyspark',
+                       master_log_dir='None',
+                       master_log_filename='spark_master.out')

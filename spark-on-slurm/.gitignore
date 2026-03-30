@@ -1,0 +1,4 @@
+sparkcluster*
+.spark*
+.cache
+spark_master.out
