@@ -9,20 +9,23 @@ setup: ${HOME}/.pixi/bin/pixi
 
 start-slurm:
 	docker run \
-		-v ${PWD}:/home/river \
+		-v ${PWD}:/home/river/spark \
 		--name slurm-dev \
 		-p 8081:22 \
 		--rm \
 		--privileged \
 		-d ${SLURM_IMAGE} || echo "Docker Slurm is already configured"
 
-test: setup start-slurm
+test: start-slurm
 	docker exec \
 		-u river \
 		-w /home/river \
 		slurm-dev \
 		/home/river/.pixi/bin/pixi \
-		run sparkhpc-example
+		run spark/sparkhpc-example
+
+test-slurm-local:
+	${HOME}/.pixi/bin/pixi run sparkhpc-example
 
 clean:
 	rm -f sparkhpc/sparkcluster-*.log sparkhpc/job
