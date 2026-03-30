@@ -19,10 +19,10 @@ start-slurm:
 test: start-slurm
 	docker exec \
 		-u river \
-		-w /home/river \
+		-w /home/river/spark \
 		slurm-dev \
 		/home/river/.pixi/bin/pixi \
-		run spark/sparkhpc-example
+		run sparkhpc-example
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
