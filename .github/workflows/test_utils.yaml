@@ -32,5 +32,5 @@ jobs:
         run: |
           for util in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "Running test for $util"
-            make -C $util test
+            cd $util; make test
           done
