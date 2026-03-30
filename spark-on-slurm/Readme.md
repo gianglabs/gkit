@@ -108,3 +108,8 @@ squeue -u $USER
 ## Scope
 
 This README describes **Spark-on-Slurm only**. HDFS/Hadoop integration is intentionally deferred for a separate step.
+
+## References
+This toolkit is adapted from the original [sparkhpc project](https://github.com/rokroskar/sparkhpc), which provides a framework for running Spark on HPC environments. However, the original repository is no longer actively maintained and requires updates to function with modern Spark and SLURM configurations.
+
+Therefore, this implementation integrates and modifies the original toolkit with several adjustments to ensure compatibility and reliable operation in current environments.
