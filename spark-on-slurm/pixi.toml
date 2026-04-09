@@ -6,7 +6,8 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
-install = "pip install -e sparkhpc"
+install = "python -m pip install -e sparkhpc"
+install-sparkhpc = "python -m pip install -e sparkhpc"
 sparkhpc-validate = "python examples/validate_spark.py"
 sparkhpc-pi = "sparkcluster start 2 && python examples/pi_counter.py"
 sparkhpc-hail = "sparkcluster start 2 && sleep 10 && python examples/simulate_gwas_by_hail.py"
@@ -14,8 +15,8 @@ sparkhpc-hail = "sparkcluster start 2 && sleep 10 && python examples/simulate_gw
 [dependencies]
 python = "3.11.*"
 openjdk = "==17.0.18"
+pip = ">=26.0.1"
 
 [pypi-dependencies]
-pip = ">=26.0.1, <27"
 hail = "==0.2.137"
 pyspark = ">=3.5.8, <4"
