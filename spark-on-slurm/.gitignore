@@ -3,3 +3,4 @@ sparkcluster*
 .cache
 spark_master.out
 job
+*.log

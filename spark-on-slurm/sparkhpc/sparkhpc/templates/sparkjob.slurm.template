@@ -5,8 +5,9 @@
 #SBATCH -n {number_of_executors:d} # requesting n tasks
 #SBATCH -c {cores_per_executor:d}
 #SBATCH --mem-per-cpu={memory_per_core:d} 
-#SBATCH -N {number_of_executors:d}
+#SBATCH -N 1 # number of nodes
 #SBATCH --ntasks-per-core=1
+{partition}
 
 # setup the spark paths
 import os

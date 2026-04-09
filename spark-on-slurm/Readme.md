@@ -23,7 +23,7 @@ When you run the example workflow:
   User entrypoints (`setup`, `example`, `clean`).
 - `pixi.toml`  
   Environment definition and task `sparkhpc-example`.
-- `sparkhpc/run_example.py`  
+- `example/*.py`  
   End-to-end test runner: submit cluster, wait for master, run Spark actions, cleanup.
 - `sparkhpc/sparkhpc/sparkjob.py`  
   Core Spark-on-Slurm orchestration logic.
@@ -110,6 +110,7 @@ squeue -u $USER
 This README describes **Spark-on-Slurm only**. HDFS/Hadoop integration is intentionally deferred for a separate step.
 
 ## References
+
 This toolkit is adapted from the original [sparkhpc project](https://github.com/rokroskar/sparkhpc), which provides a framework for running Spark on HPC environments. However, the original repository is no longer actively maintained and requires updates to function with modern Spark and SLURM configurations.
 
 Therefore, this implementation integrates and modifies the original toolkit with several adjustments to ensure compatibility and reliable operation in current environments.

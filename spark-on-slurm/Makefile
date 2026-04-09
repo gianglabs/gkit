@@ -1,5 +1,5 @@
 SLURM_IMAGE:= nttg8100/river-slurm:1.1.0
-.PHONY: setup example clean
+.PHONY: setup example clean install
 
 ${HOME}/.pixi/bin/pixi:
 	curl -sSL https://pixi.sh/install.sh | sh
@@ -32,11 +32,14 @@ get-slurm:
 		exit 1; \
 	fi
 
+install:
+	${HOME}/.pixi/bin/pixi run install-sparkhpc
+
 # inside user river is the standard user with 1001 mapping id, Github Actions does not have this user
 test: ${HOME}/.pixi/bin/pixi start-slurm get-slurm
 	docker exec \
 		-w /tmp/spark \
-		slurm-dev /root/.pixi/bin/pixi run sparkhpc-example
+		slurm-dev /root/.pixi/bin/pixi run sparkhpc-hail
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
