@@ -1,5 +1,7 @@
-sparkcluster*
+sparkcluster-.*log
 .spark*
 .cache
 spark_master.out
 job
+*.log
+.bash_history

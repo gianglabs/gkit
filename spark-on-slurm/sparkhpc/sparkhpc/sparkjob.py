@@ -81,10 +81,33 @@ def _resolve_spark_home(explicit_spark_home=None):
 
     try:
         import pyspark
-        pyspark_home = os.path.dirname(pyspark.__file__)
-        if os.path.exists(pyspark_home):
-            return pyspark_home
-    except Exception:
+        pyspark_module = os.path.dirname(pyspark.__file__)
+        
+        # Check if pyspark has jars directory (typical for pip/conda/pixi installations)
+        if os.path.exists(os.path.join(pyspark_module, 'jars')):
+            return pyspark_module
+        
+        # For traditional Spark distributions, try to find the root
+        # pyspark is at /path/to/spark/python/pyspark or /path/to/spark/lib/python/pyspark
+        # Try going up to find a directory with bin/spark-submit and jars/
+        site_packages = os.path.dirname(pyspark_module)
+        python_lib = os.path.dirname(site_packages)
+        lib_dir = os.path.dirname(python_lib)
+        conda_env_root = os.path.dirname(lib_dir)
+        
+        # Check if environment root has spark binaries
+        if os.path.exists(os.path.join(conda_env_root, 'bin', 'spark-submit')):
+            if os.path.exists(os.path.join(conda_env_root, 'jars')):
+                return conda_env_root
+            if os.path.exists(os.path.join(conda_env_root, 'bin', 'spark-class')):
+                return conda_env_root
+        
+        # Fallback: check parent directory (for non-standard layouts)
+        parent = os.path.dirname(conda_env_root)
+        if os.path.exists(os.path.join(parent, 'bin', 'spark-submit')):
+            return parent
+            
+    except Exception as e:
         pass
 
     return os.path.join(os.path.expanduser('~'), 'spark')
@@ -148,7 +171,8 @@ class SparkJob(object):
                 spark_home=None,
                 master_log_dir=None,
                 master_log_filename='spark_master.out',
-                scheduler=None):
+                scheduler=None,
+                partition=None):
         """
         Creates a SparkJob
         
@@ -187,6 +211,8 @@ class SparkJob(object):
         scheduler: string
             specify manually which scheduler you want to use; 
             usually the automatic determination will work fine so this should not be used
+        partition: string
+            SLURM partition to submit the job to (e.g., 'gpu', 'cpu', 'long', etc.)
 
         Example usage:
         
@@ -243,7 +269,8 @@ class SparkJob(object):
                               'master_log_filename': master_log_filename,
                               'scheduler': scheduler,
                               'workdir': os.getcwd(),
-                              'extra_scheduler_options': extra_scheduler_options
+                              'extra_scheduler_options': extra_scheduler_options,
+                              'partition': partition
                               }
 
         signal.signal(signal.SIGINT, self._sigint_handler)
@@ -357,10 +384,23 @@ class SparkJob(object):
 
         if self.template is None: 
             template_file = templates[self.__class__]
-            template_str = resources.files('sparkhpc').joinpath('templates', template_file).read_text()
+            # Try to get template from package resources first (for installed packages)
+            try:
+                template_str = resources.files('sparkhpc').joinpath('templates').joinpath(template_file).read_text()
+            except (FileNotFoundError, TypeError, AttributeError):
+                # Fallback for development versions: use file path relative to this module
+                template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+                template_path = os.path.join(template_dir, template_file)
+                with open(template_path) as f:
+                    template_str = f.read()
         else : 
             with open(self.template) as template_file: 
                 template_str = template_file.read()
+
+        # Construct partition directive
+        partition_directive = ""
+        if self.partition:
+            partition_directive = "#SBATCH -p {partition}".format(partition=self.partition)
 
         job = template_str.format(walltime=self.walltime, 
                                   ncores=self.ncores, 
@@ -372,7 +412,8 @@ class SparkJob(object):
                                   spark_home=self.spark_home,
                                   master_log_dir=self.master_log_dir,
                                   master_log_filename=self.master_log_filename,
-                                  extra_scheduler_options=self.extra_scheduler_options)
+                                  extra_scheduler_options=self.extra_scheduler_options,
+                                  partition=partition_directive)
 
         with open('job', 'w') as jobfile: 
             jobfile.write(job)
