@@ -1,0 +1,5 @@
+*.gz
+*gz.tbi
+GLnexus.DB
+*.bcf
+*.bed
