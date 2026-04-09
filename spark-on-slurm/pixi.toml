@@ -7,10 +7,9 @@ version = "0.1.0"
 
 [tasks]
 install = "python -m pip install -e sparkhpc"
-install-sparkhpc = "python -m pip install -e sparkhpc"
 sparkhpc-validate = "python examples/validate_spark.py"
-sparkhpc-pi = "sparkcluster start 2 && python examples/pi_counter.py"
-sparkhpc-hail = "sparkcluster start 2 && sleep 10 && python examples/simulate_gwas_by_hail.py"
+sparkhpc-pi = "python sparkhpc/scripts/sparkcluster start 2 && python examples/pi_counter.py"
+sparkhpc-hail = "python sparkhpc/scripts/sparkcluster start 2 && sleep 10 && python examples/simulate_gwas_by_hail.py"
 
 [dependencies]
 python = "3.11.*"

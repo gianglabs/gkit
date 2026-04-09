@@ -39,7 +39,7 @@ install:
 test: ${HOME}/.pixi/bin/pixi start-slurm get-slurm
 	docker exec \
 		-w /tmp/spark \
-		slurm-dev bash -c "/root/.pixi/bin/pixi run install && /root/.pixi/bin/pixi run sparkhpc-hail"
+		slurm-dev /root/.pixi/bin/pixi run sparkhpc-hail
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
