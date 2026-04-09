@@ -1,4 +1,4 @@
-sparkcluster*
+sparkcluster-.*log
 .spark*
 .cache
 spark_master.out
