@@ -3,7 +3,8 @@ HOME_DIR=$(pwd)
 # Download reference
 mkdir -p reference
 aws s3 cp --no-sign-request s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta reference
-
+aws s3 cp --no-sign-request s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai reference
+aws s3 cp --no-sign-request s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict reference
 
 # GIAB
 cd ${HOME_DIR}/cohort_vcf/GIAB/data
