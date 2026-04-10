@@ -9,7 +9,7 @@ DPGT_JAR="$(find "${PROJECT_ROOT}/DPGT/target" -name "dpgt*.jar" | head -1)"
 
 # Defaults (override with env vars if needed)
 INPUT_LIST="${INPUT_LIST:-${PROJECT_ROOT}/cohort_vcf/1KGP/gvcf_input.list}"
-REFERENCE_FASTA="${REFERENCE_FASTA:-/scratch/data/nf-germline-short-read-variant-calling/benchmark/references/Homo_sapiens_assembly38.fasta}"
+REFERENCE_FASTA="${REFERENCE_FASTA:-reference/Homo_sapiens_assembly38.fasta}"
 OUTPUT_DIR="${OUTPUT_DIR:-${PROJECT_ROOT}/cohort_vcf/1KGP/results}"
 TARGET_REGION="${TARGET_REGION:-chr12:111760000-111765000}"
 JOBS="${JOBS:-4}"
