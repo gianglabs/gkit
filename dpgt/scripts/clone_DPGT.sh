@@ -3,8 +3,10 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DPGT_DIR="${PROJECT_ROOT}/DPGT"
+FORK_URL="${DPGT_FORK_URL:-https://github.com/nttg8100/DPGT.git}"
 
 echo "[clone] project root: ${PROJECT_ROOT}"
+echo "[clone] fork url: ${FORK_URL}"
 
 if ! git -C "${PROJECT_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   echo "[clone] ERROR: ${PROJECT_ROOT} is not a git repository"
@@ -12,6 +14,8 @@ if ! git -C "${PROJECT_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; t
 fi
 
 echo "[clone] init top-level DPGT submodule"
+git -C "${PROJECT_ROOT}" config submodule.DPGT.url "${FORK_URL}"
+git -C "${PROJECT_ROOT}" submodule sync --recursive DPGT
 git -C "${PROJECT_ROOT}" submodule update --init --recursive DPGT
 
 if [ ! -d "${DPGT_DIR}" ]; then
@@ -20,6 +24,9 @@ if [ ! -d "${DPGT_DIR}" ]; then
 fi
 
 if [ -f "${DPGT_DIR}/.gitmodules" ]; then
+  echo "[clone] set DPGT origin to fork"
+  git -C "${DPGT_DIR}" remote set-url origin "${FORK_URL}" || true
+
   echo "[clone] rewrite nested submodule URLs to HTTPS"
   sed -i 's#git@github.com:#https://github.com/#g' "${DPGT_DIR}/.gitmodules"
   sed -i 's#git@gitlab.com:#https://gitlab.com/#g' "${DPGT_DIR}/.gitmodules"
