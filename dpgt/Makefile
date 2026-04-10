@@ -1,8 +1,7 @@
 include ../common.mk
 .PHONY: clone build build-cpp build-java clean prep-input run-verify
 clone: 
-	git submodule update --recursive
-	cd DPGT && git submodule update --recursive
+	bash scripts/clone_DPGT.sh
 
 build: clone build-cpp build-java
 	@echo "DPGT fully built!"
