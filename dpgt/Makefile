@@ -1,7 +1,9 @@
 include ../common.mk
-.PHONY: setup build build-cpp build-java clean prep-input run-verify
+.PHONY: clone build build-cpp build-java clean prep-input run-verify
+clone: 
+	git submodule update --recursive
 
-build: build-cpp build-java
+build: clone build-cpp build-java
 	@echo "DPGT fully built!"
 
 build-cpp: ${HOME}/.pixi/bin/pixi
