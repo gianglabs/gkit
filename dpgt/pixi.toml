@@ -1,0 +1,55 @@
+[workspace]
+name = "dpgt"
+version = "1.3.2.0"
+description = "DPGT: A Distributed Population Genetics analysis Tool with cohort VCF processing"
+authors = ["BGI-flexlab"]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+# C++ Build Tools
+cmake = ">=3.15"
+make = "*"
+compilers = "*"
+boost = ">=1.74"
+jemalloc = "*"
+
+# Java
+openjdk = "8.*"
+
+# htslib dependencies
+zlib = "*"
+bzip2 = "*"
+xz = "*"
+curl = "*"
+
+# Build tools
+pkg-config = "*"
+maven = "*"
+pyspark = "*"
+awscliv2 = ">=2.3.1,<3"
+google-cloud-storage = ">=3.10.1,<4"
+gsutil = ">=5.36,<6"
+
+[tasks]
+# Build C++ libraries
+build-cpp = { cmd = "bash scripts/build_cpp.sh", depends-on = [], description = "Build C++ native libraries" }
+
+# Build Java package
+build-java = { cmd = "cd DPGT && mvn package -q", depends-on = ["build-cpp"], description = "Build Java JAR package" }
+
+# Full build
+build = { cmd = "echo 'Building DPGT...' && sleep 1", depends-on = ["build-cpp", "build-java"], description = "Full build (C++ + Java)" }
+
+# Create input VCF list file
+prep-input = { cmd = "echo '/scratch/data/gkit/dpgt/cohort_vcf/1KGP/data/1KGP_ALDH2_5kb.bcf' > vcf_input.list && echo 'Created vcf_input.list with cohort VCF' && cat vcf_input.list", description = "Prepare input VCF list for DPGT" }
+
+# Run DPGT on cohort VCF (local mode) - verify build
+run-local = { cmd = "export LD_LIBRARY_PATH=$(pwd)/build/lib:${LD_LIBRARY_PATH} && java -cp $(find DPGT/target -name 'dpgt*.jar' | head -1) org.bgi.flexlab.dpgt.jointcalling.JointCallingSpark --help || echo 'Build first with: pixi run build'", depends-on = ["build"], description = "Run DPGT help (verify build)" }
+
+# Clean build artifacts
+clean = { cmd = "rm -rf build DPGT/target vcf_input.list results_cohort", description = "Clean build artifacts and outputs" }
+
+# Setup environment variables
+setup = { cmd = "echo '=== DPGT Setup ===' && echo '' && echo 'Cohort VCF available at: /scratch/data/gkit/dpgt/cohort_vcf/1KGP/' && echo '' && echo 'Available tasks:' && echo '  pixi run build         - Build DPGT (C++ + Java)' && echo '  pixi run prep-input    - Create VCF input list' && echo '  pixi run run-local     - Verify build (show DPGT help)' && echo '  pixi run clean         - Clean artifacts' && echo '' && echo 'Full workflow:' && echo '  pixi run build && pixi run prep-input && pixi run run-local'", description = "Display setup information" }
+
