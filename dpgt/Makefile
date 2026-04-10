@@ -18,8 +18,8 @@ build-java: ${HOME}/.pixi/bin/pixi
 	@echo "Java build complete!"
 
 test: build
-	${HOME}/.pixi/bin/pixi run scripts/download.sh
-	${HOME}/.pixi/bin/pixi run scripts/run_dpgt.sh
+	${HOME}/.pixi/bin/pixi run bash scripts/download.sh
+	${HOME}/.pixi/bin/pixi run bash scripts/run_dpgt.sh
 
 clean:
 	@echo "Cleaning build artifacts..."
