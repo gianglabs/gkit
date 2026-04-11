@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/scratch/data/gkit/dpgt/build/cmake_install.cmake",
-		"/scratch/data/gkit/dpgt/build/vendor/spdlog/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

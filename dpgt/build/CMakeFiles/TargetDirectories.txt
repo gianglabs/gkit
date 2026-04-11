@@ -1,6 +1,0 @@
-/scratch/data/gkit/dpgt/build/CMakeFiles/cdpgt.dir
-/scratch/data/gkit/dpgt/build/CMakeFiles/edit_cache.dir
-/scratch/data/gkit/dpgt/build/CMakeFiles/rebuild_cache.dir
-/scratch/data/gkit/dpgt/build/vendor/spdlog/CMakeFiles/spdlog.dir
-/scratch/data/gkit/dpgt/build/vendor/spdlog/CMakeFiles/edit_cache.dir
-/scratch/data/gkit/dpgt/build/vendor/spdlog/CMakeFiles/rebuild_cache.dir
