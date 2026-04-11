@@ -6,16 +6,16 @@ aws s3 cp --no-sign-request s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/
 aws s3 cp --no-sign-request s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.fasta.fai reference
 aws s3 cp --no-sign-request s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Sequence/WholeGenomeFasta/Homo_sapiens_assembly38.dict reference
 
-# GIAB
-cd ${HOME_DIR}/cohort_vcf/GIAB/data
-gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG002.child.g.vcf.gz .
-gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG002.child.g.vcf.gz.tbi .
+# # GIAB: has error due to gvcf format
+# cd ${HOME_DIR}/cohort_vcf/GIAB/data
+# gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG002.child.g.vcf.gz .
+# gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG002.child.g.vcf.gz.tbi .
 
-gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG003.parent1.g.vcf.gz .
-gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG003.parent1.g.vcf.gz.tbi .
+# gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG003.parent1.g.vcf.gz .
+# gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG003.parent1.g.vcf.gz.tbi .
 
-gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG004.parent2.g.vcf.gz .
-gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG004.parent2.g.vcf.gz.tbi .
+# gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG004.parent2.g.vcf.gz .
+# gsutil cp gs://deepvariant/case-study-outputs/1.10.0/deeptrio/wgs/HG004.parent2.g.vcf.gz.tbi .
 
 
 # 1KGP

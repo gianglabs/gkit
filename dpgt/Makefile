@@ -17,9 +17,9 @@ build-java: ${HOME}/.pixi/bin/pixi
 	cd DPGT && ${HOME}/.pixi/bin/pixi run mvn package -q -DskipTests
 	@echo "Java build complete!"
 
-test: ${HOME}/.pixi/bin/pixi
+test: build ${HOME}/.pixi/bin/pixi
 	${HOME}/.pixi/bin/pixi run jar tf DPGT/target/dpgt-1.3.2.0.jar | grep 'org/slf4j/LoggerFactory.class'
-# 	${HOME}/.pixi/bin/pixi run bash scripts/download.sh
+	${HOME}/.pixi/bin/pixi run bash scripts/download.sh
 	${HOME}/.pixi/bin/pixi run bash scripts/run_dpgt.sh
 
 clean:
