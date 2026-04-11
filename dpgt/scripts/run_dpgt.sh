@@ -5,7 +5,7 @@ set -e
 
 PROJECT_ROOT=$(pwd)
 BUILD_LIB_PATH="${PROJECT_ROOT}/build/lib"
-DPGT_JAR="$(find "${PROJECT_ROOT}/DPGT/target" -name "dpgt*.jar" | head -1)"
+DPGT_JAR="${PROJECT_ROOT}/DPGT/target/dpgt-1.3.2.0.jar"
 
 # Defaults (override with env vars if needed)
 INPUT_LIST="${INPUT_LIST:-${PROJECT_ROOT}/cohort_vcf/1KGP/gvcf_input.list}"
