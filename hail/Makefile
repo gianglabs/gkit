@@ -1,8 +1,6 @@
+include ../common.mk
 SLURM_IMAGE:= nttg8100/river-slurm:1.1.0
 .PHONY: setup example clean install
-
-${HOME}/.pixi/bin/pixi:
-	curl -sSL https://pixi.sh/install.sh | sh
 
 setup: ${HOME}/.pixi/bin/pixi
 	${HOME}/.pixi/bin/pixi install
@@ -39,7 +37,7 @@ install:
 test: ${HOME}/.pixi/bin/pixi start-slurm get-slurm
 	docker exec \
 		-w /tmp/spark \
-		slurm-dev /root/.pixi/bin/pixi run sparkhpc-pi
+		slurm-dev /root/.pixi/bin/pixi run sparkhpc-hail
 
 test-slurm-local:
 	${HOME}/.pixi/bin/pixi run sparkhpc-example
