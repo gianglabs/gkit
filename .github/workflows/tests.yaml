@@ -1,0 +1,56 @@
+name: Kit tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  get-changed-kits:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files in root directories
+        uses: tj-actions/changed-files@v47.0.5
+        id: changed-files
+        with:
+          dir_names: "true"
+          dir_names_max_depth: 1
+          files: |
+            */**
+          files_ignore: |
+            .github/**
+          base_sha: ${{ github.event.pull_request.base.ref }}
+
+      - name: Set matrix
+        id: set-matrix
+        run: |
+          kits="${{ steps.changed-files.outputs.all_changed_files }}"
+          # Convert space-separated string to JSON array (single line)
+          MATRIX=$(echo $kits | jq -cR 'split(" ") | map(select(length > 0))')
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+
+  test-kit:
+    name: Test ${{ matrix.module }}
+    needs: [get-changed-kits]
+    if: ${{ needs.get-changed-kits.outputs.matrix != '[]' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        module: ${{ fromJson(needs.get-changed-kits.outputs.matrix) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run kit test
+        run: |
+          cd ${{ matrix.module }} && make test
