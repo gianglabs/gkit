@@ -163,7 +163,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/5d/8f/a32a99fc03e4b37e31b57cb9cefc65050ea08147a8ce12f288616b05ef54/wrapt-1.17.3-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/a8/a9/d23012099dc88ec69a29c6407b41d89681cb674c2043cd5b467c7e299c08/xyzservices-2026.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/9a/64/c53487d9f4968045b8afa51aed7ca44f58b2589e772f32745f3744476c82/yarl-1.23.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
-      - pypi: ./sparkhpc
+      - pypi: ../spark-on-slurm/sparkhpc
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
   build_number: 20
@@ -1678,7 +1678,7 @@ packages:
   name: sortedcontainers
   version: 2.4.0
   sha256: a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
-- pypi: ./sparkhpc
+- pypi: ../spark-on-slurm/sparkhpc
   name: sparkhpc
   version: 0.3.post4
   sha256: e04b7a91a93671f75bd1ce0cb032d4e8d5911a8a97acaea1ec8f77bbbf55d49b
