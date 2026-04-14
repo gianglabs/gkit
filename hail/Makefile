@@ -7,7 +7,7 @@ setup: ${HOME}/.pixi/bin/pixi
 
 start-slurm:
 	docker run \
-		-v ${PWD}:/tmp/spark \
+		-v ${HOMEDIR}:/tmp/gkit \
 		-v ${HOME}/.pixi:/root/.pixi \
 		--name slurm-dev \
 		-p 8081:22 \
@@ -36,7 +36,7 @@ install:
 # inside user river is the standard user with 1001 mapping id, Github Actions does not have this user
 test: ${HOME}/.pixi/bin/pixi start-slurm get-slurm
 	docker exec \
-		-w /tmp/spark \
+		-w /tmp/gkit/hail \
 		slurm-dev /root/.pixi/bin/pixi run sparkhpc-hail
 
 test-slurm-local:

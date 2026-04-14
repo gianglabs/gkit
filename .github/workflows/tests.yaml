@@ -1,4 +1,4 @@
-name: Test Changed Projects
+name: Kit tests
 
 on:
   pull_request:
